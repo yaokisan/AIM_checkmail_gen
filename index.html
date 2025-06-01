@@ -40,6 +40,15 @@
       console.log('🌍 Environment:', window.location.hostname);
       console.log('🔑 CLIENT_ID loaded:', window.process.env.REACT_APP_GOOGLE_CLIENT_ID ? 'YES' : 'NO');
       console.log('🔑 API_KEY loaded:', window.process.env.API_KEY ? 'YES' : 'NO');
+
+      // フォールバック: 置換されていない場合（開発環境）env-config.js を読み込む
+      if (window.process.env.REACT_APP_GOOGLE_CLIENT_ID.includes('%')) {
+        console.log('🛠  Placeholder detected. Loading env-config.js for dev...');
+        const devScript = document.createElement('script');
+        devScript.src = '/env-config.js';
+        devScript.async = false;
+        document.head.appendChild(devScript);
+      }
     </script>
   <script type="importmap">
 {
