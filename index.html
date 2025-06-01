@@ -27,26 +27,19 @@
         background: #555;
       }
     </style>
-    <!-- Load environment variables from env-config.js -->
+    <!-- 環境変数をwindow.processに直接設定 -->
     <script>
-      // 本番環境（Vercel）の判定
-      const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+      window.process = window.process || {};
+      window.process.env = window.process.env || {};
       
-      if (isProduction) {
-        // 本番環境：本番用設定ファイルを読み込み
-        const script = document.createElement('script');
-        script.src = '/env-config.production.js';
-        script.async = false;
-        document.head.appendChild(script);
-        console.log('🚀 Loading production environment configuration');
-      } else {
-        // 開発環境：開発用設定ファイルを読み込み
-        const script = document.createElement('script');
-        script.src = '/env-config.js';
-        script.async = false;
-        document.head.appendChild(script);
-        console.log('🛠️ Loading development environment configuration');
-      }
+      // Viteのビルド時に環境変数が注入される
+      window.process.env.REACT_APP_GOOGLE_CLIENT_ID = '%VITE_GOOGLE_CLIENT_ID%';
+      window.process.env.API_KEY = '%VITE_API_KEY%';
+      
+      // デバッグ用ログ
+      console.log('🌍 Environment:', window.location.hostname);
+      console.log('🔑 CLIENT_ID loaded:', window.process.env.REACT_APP_GOOGLE_CLIENT_ID ? 'YES' : 'NO');
+      console.log('🔑 API_KEY loaded:', window.process.env.API_KEY ? 'YES' : 'NO');
     </script>
   <script type="importmap">
 {
