@@ -1,0 +1,5 @@
+{
+  "name": "Gmail Draft Automation Tool",
+  "description": "An application to automate the creation of Gmail drafts for video check requests based on provided URLs and document names. It calculates deadlines and formats email content according to a template.",
+  "requestFramePermissions": []
+}
