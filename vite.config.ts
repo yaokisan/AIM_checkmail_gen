@@ -17,6 +17,10 @@ export default defineConfig(({ mode }) => {
       },
       build: {
         rollupOptions: {
+          input: {
+            main: path.resolve(__dirname, 'index.html'),
+            'shooting-plan': path.resolve(__dirname, 'shooting-plan.html')
+          },
           output: {
             manualChunks: {
               vendor: ['react', 'react-dom']
@@ -25,13 +29,13 @@ export default defineConfig(({ mode }) => {
         }
       },
       plugins: [
-        // 本番ビルド時にindex.htmlの環境変数プレースホルダーを置換
+        // 本番ビルド時にHTMLファイルの環境変数プレースホルダーを置換
         {
           name: 'replace-env-vars',
           generateBundle(options, bundle) {
-            // index.htmlを見つけて環境変数を置換
+            // HTMLファイルを見つけて環境変数を置換
             for (const fileName in bundle) {
-              if (fileName === 'index.html') {
+              if (fileName.endsWith('.html')) {
                 const file = bundle[fileName] as any;
                 if (file.source) {
                   file.source = file.source
